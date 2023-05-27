@@ -3,6 +3,7 @@ let description = document.getElementById("descriptionVal");
 let addTodoForm = document.getElementById("todoForm");
 let todoCard = document.getElementById("todoCards");
 let clearButton = document.getElementById("clearBtn");
+let searchQuery = document.getElementById('search');
 function deleted(item) {
   new Todo().deleted(item);
 }
@@ -74,6 +75,27 @@ class Todo {
     localStorage.removeItem("todos");
     this.render();
   }
+  filter(query){
+    let todos;
+    let savedTodos = localStorage.getItem("todos");
+    if (savedTodos == null) {
+      todos = [];
+    } else {
+      todos = JSON.parse(savedTodos);
+    }
+    let cards = document.getElementsByClassName('card');
+    Array.from(cards).forEach((item)=>{
+        let text = item.getElementsByTagName("p")[0].innerHTML;
+        if(text.includes(query)){
+            item.style.display = 'block';
+        }else {
+            item.style.display = 'none';
+        }
+
+    })
+    
+
+  }
 }
 
 window.addEventListener("load", () => {
@@ -96,3 +118,9 @@ clearButton.addEventListener("click", () => {
     ins.clear();
   }
 });
+
+searchQuery.addEventListener("input", ()=>{
+    let query = searchQuery.value;
+    let ins = new Todo()
+    ins.filter(query);
+})

@@ -1,17 +1,23 @@
+// App Variables
 let title = document.getElementById("titleVal");
 let description = document.getElementById("descriptionVal");
 let addTodoForm = document.getElementById("todoForm");
 let todoCard = document.getElementById("todoCards");
 let clearButton = document.getElementById("clearBtn");
 let searchQuery = document.getElementById('search');
+
+
 function deleted(item) {
   new Todo().deleted(item);
 }
+
+// Class that contains all methods related to todos
 class Todo {
   constructor(title, description) {
     this.title = title;
     this.description = description;
   }
+  //Method for new todo in localStorage
   save() {
     let todos;
     let savedTodos = localStorage.getItem("todos");
@@ -28,6 +34,8 @@ class Todo {
     localStorage.setItem("todos", JSON.stringify(todos));
     this.render();
   }
+
+  //Method for deleting a todo
   deleted(item) {
     item = parseInt(item);
     let todos;
@@ -41,6 +49,8 @@ class Todo {
     localStorage.setItem("todos", JSON.stringify(todos));
     this.render();
   }
+
+  //Method for rendering todos in the DOM
   render() {
     let todos;
     let savedTodos = localStorage.getItem("todos");
@@ -71,10 +81,15 @@ class Todo {
       clearButton.setAttribute("disabled", true);
     }
   }
+
+
+  //Method for clearing all the todos
   clear() {
     localStorage.removeItem("todos");
     this.render();
   }
+
+  //Method for filtering todos for search query
   filter(query){
     let todos;
     let savedTodos = localStorage.getItem("todos");
@@ -93,8 +108,6 @@ class Todo {
         }
 
     })
-    
-
   }
 }
 
